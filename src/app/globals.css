@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #eef3fb;
+  --color-brand-100: #d9e4f5;
+  --color-brand-200: #b3c8ea;
+  --color-brand-400: #6b93cf;
+  --color-brand-500: #3d6db5;
+  --color-brand-600: #30589a;
+  --color-brand-700: #27477c;
+  --color-brand-900: #0f1d36;
+  --color-brand-950: #081224;
+  --color-teal-brand: #6aafa8;
+  --color-ball: #dff04a;
+  --color-ball-600: #c4d62a;
+  --color-ink: #0d1524;
+  --color-paper: #f6f5f0;
+
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo",
+    "Noto Sans KR", sans-serif;
+  --font-display: var(--font-archivo), "Pretendard Variable", sans-serif;
+
+  --animate-marquee: marquee 40s linear infinite;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    word-break: keep-all;
+  }
+  ::selection {
+    @apply bg-ball text-ink;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+}
+@utility eyebrow {
+  @apply font-display text-xs font-semibold tracking-[0.2em] text-brand-500 uppercase;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-brand-500 text-white hover:bg-brand-600;
+}
+@utility btn-ball {
+  @apply btn bg-ball text-ink hover:bg-ball-600;
+}
+@utility btn-ghost {
+  @apply btn border border-ink/15 bg-white text-ink hover:border-ink/40;
+}
+@utility btn-danger {
+  @apply btn border border-red-200 bg-white text-red-600 hover:bg-red-50;
+}
+@utility field {
+  @apply w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-[15px] transition placeholder:text-ink/35 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15 focus:outline-none;
+}
+@utility label {
+  @apply mb-1.5 block text-sm font-semibold text-ink/80;
+}
+
+/* 스크롤 진입 애니메이션 – CSS scroll-driven animations (지원 브라우저에서만) */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(32px); }
+      to { opacity: 1; transform: none; }
+    }
+  }
+}
+
+/* 페이지 전환 – View Transitions API */
+@view-transition {
+  navigation: auto;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
